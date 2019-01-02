@@ -53,41 +53,11 @@ static unsigned int _localPort = 8888;  // local port to listen for UDP packets
 
 ESP32_WebGet::ESP32_WebGet(){}
 
-bool connectWait(int timeout){
-  int tick = millis();
-  while( tick + timeout > millis() ){
-    if (WiFi.status() == WL_CONNECTED) {
-      return true;
-    }
-    delay(10);
-  }
-  return false;
-}
 
-bool connectWifi(){
-  do{
-    WiFi.begin("yukirin_my_angel", "x2a8xrqcfhrm9");
-    if( connectWait(5000)==false){
-      WiFi.begin("Buffalo-A-620E", "caix4x4iufnhx");
-      if( connectWait(5000)==false){
-        WiFi.begin("Buffalo-G-620E", "caix4x4iufnhx");
-        if( connectWait(5000)==false){
-          WiFi.begin("yukirin_my_angel", "x2a8xrqcfhrm9");
-          if( connectWait(5000)==false){
-            ;
-          }
-        }
-      }
-    }
-  }while(WiFi.status() != WL_CONNECTED);
-
-  return (bool)(WiFi.status() == WL_CONNECTED);
-}
 //********AP(Router) Connection****
 void ESP32_WebGet::EWG_AP_Connect(const char *ssid, const char *password){
   //Serial.begin(115200); //※二重使用厳禁！　WiFi STA 接続できなくなる。
   //delay(10);
-  connectWifi();
 #if 0
   Serial.println();
   Serial.print(F("Connecting to "));
